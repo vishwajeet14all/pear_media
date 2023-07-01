@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Coupon Wheel</title>
+    <style>
+        /* CSS styles for the wheel */
+        .wheel-container {
+            width: 300px;
+            height: 300px;
+            background-color: #0b5164;
+            border-radius: 50%;
+            position: relative;
+            margin: 0 auto;
+            margin-top: 50px;
+            cursor: pointer;
+            transition: transform 2s ease;
+        }
+        
+        .arrow {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 20px;
+            height: 100px;
+            background-color: red;
+            transition: transform 2s ease;
+        }
+        
+        /* CSS styles for the coupon result */
+        .result {
+            display: none;
+            margin-top: 20px;
+            font-size: 20px;
+            font-weight: bold;
+            text-align: center;
+            transition: opacity 1s ease;
+        }
+
+        @media only screen and (max-width: 600px) {
+            /* Adjustments for mobile devices */
+            .wheel-container {
+                width: 200px;
+                height: 200px;
+            }
+
+            .arrow {
+                width: 10px;
+                height: 50px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="wheel-container">
+        <div class="arrow"></div>
+    </div>
+    <div class="result"></div>
+
+    <script>
+        // JavaScript code for spinning the wheel and displaying the coupon result
+        var wheelContainer = document.querySelector('.wheel-container');
+        var arrow = document.querySelector('.arrow');
+        var result = document.querySelector('.result');
+        var spinCount = 0;
+        var isSpinning = false;
+
+        wheelContainer.addEventListener('click', function() {
+            if (!isSpinning) {
+                isSpinning = true;
+                spinCount++;
+
+                if (spinCount === 1) {
+                    // First spin
+                    arrow.style.transform = 'rotate(360deg)';
+                    result.style.display = 'none';
+                    setTimeout(function() {
+                        isSpinning = false;
+                        result.innerHTML = 'Try again';
+                        result.style.display = 'block';
+                    }, 2000);
+                } else if (spinCount === 2) {
+                    // Second spin
+                    var randomAngle = Math.floor(Math.random() * 360) + 1440; // Additional rotations for effect
+                    arrow.style.transform = 'rotate(' + randomAngle + 'deg)';
+                    result.style.display = 'none';
+                    setTimeout(function() {
+                        isSpinning = false;
+                        result.innerHTML = 'Congratulations! You won a gift card!';
+                        result.style.display = 'block';
+                    }, 2000);
+                }
+            }
+        });
+    </script>
+</body>
+</html>
